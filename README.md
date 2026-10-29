@@ -39,29 +39,3 @@ python show_plan.py         # prints what was built, read from cdk.out/
 
 `show_plan.py` prints the exact S3 actions per role, so you can check that `users` and `worker`
 have none and `reports` has no write action.
-
-## Optional: deploy to a real account
-
-Not needed for the demo. Change the bucket names (they must be globally unique), then:
-
-```bash
-cdk bootstrap && cdk deploy
-aws s3 cp site/index.html s3://<WebsiteBucketName>/
-aws s3 sync site/assets s3://<AssetsBucketName>/assets/      # keep the assets/ prefix
-```
-
-Open the `SiteUrl` output in a browser. To test the worker:
-
-```bash
-aws sns publish --topic-arn <OrdersTopicArn> --message '{"order_id": "A200"}'
-```
-
-Remove everything afterwards: empty the three buckets, then `cdk destroy`.
-
-## What is intentionally simple here
-
-- Users and orders are sample data, not a database.
-- The `orders` Lambda does not publish to the SNS topic yet. The package grants bucket access
-  but not "publish to topic" access, so for now publish to the topic yourself (command above).
-  A `topic_access` option is a good next feature for the package.
-- No login: the API is open (the package acknowledges the cdk-nag API authorizer findings).
