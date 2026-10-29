@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Shop Portal</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <h1>Shop Portal</h1>
+    <p>Static files come from S3 through CloudFront. The buttons call the API.</p>
+    <div class="row">
+      <button onclick="call('GET', '/api/users')">Users</button>
+      <button onclick="call('GET', '/api/orders')">Orders</button>
+      <button onclick="call('POST', '/api/orders', {items: ['keyboard']})">Place order</button>
+      <button onclick="call('GET', '/api/reports')">Report</button>
+    </div>
+    <pre id="out">click a button</pre>
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
